@@ -1,0 +1,162 @@
+[gd_scene format=3 uid="uid://r282sygw2yqb"]
+
+[ext_resource type="Script" uid="uid://d334qry5yvrwc" path="res://script/Vehicle/base_Car.gd" id="1_cd047"]
+[ext_resource type="Script" uid="uid://dcvuin7vaw3kt" path="res://script/Vehicle/wheel_suspension.gd" id="2_d7vpe"]
+[ext_resource type="Script" uid="uid://dusv21yvqp80g" path="res://script/Vehicle/drivetrain_params.gd" id="2_mmd8j"]
+[ext_resource type="Script" uid="uid://bpncgmdpx7xq3" path="res://script/Vehicle/car_params.gd" id="2_uukhu"]
+[ext_resource type="Script" uid="uid://cypblo36wnkun" path="res://script/Vehicle/diff_params.gd" id="2_ynucw"]
+[ext_resource type="Script" uid="uid://dnr4dw6v7viol" path="res://script/Vehicle/wheel_params.gd" id="3_hbetw"]
+[ext_resource type="Script" uid="uid://787t50o6ky6u" path="res://script/Vehicle/TireModel/brush_tire_model.gd" id="4_mmd8j"]
+[ext_resource type="PackedScene" uid="uid://b8tj5b277nxm4" path="res://Scene/gui.tscn" id="8_jlqtu"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_kkigb"]
+
+[sub_resource type="Resource" id="Resource_2icf6"]
+script = ExtResource("2_ynucw")
+metadata/_custom_type_script = "uid://cypblo36wnkun"
+
+[sub_resource type="Resource" id="Resource_hbetw"]
+script = ExtResource("2_mmd8j")
+gear_ratios = [3.1, 2.61, 2.1, 1.72, 1.2]
+automatic = false
+rear_diff = SubResource("Resource_2icf6")
+metadata/_custom_type_script = "uid://dusv21yvqp80g"
+
+[sub_resource type="Curve" id="Curve_ynucw"]
+_data = [Vector2(0, 0), 0.0, 1.1110187, 0, 0, Vector2(1, 1), -0.2193245, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_mmd8j"]
+_data = [Vector2(0, 0.3615384), 0.0, 0.0, 0, 0, Vector2(0.25149703, 0.91538453), 0.0, 0.0, 0, 0, Vector2(0.494012, 0.9846153), 0.0, 0.0, 0, 0, Vector2(0.745509, 0.67692304), 0.0, 0.0, 0, 0, Vector2(1, 0.35384613), 0.0, 0.0, 0, 0]
+point_count = 5
+
+[sub_resource type="Resource" id="Resource_bx7vq"]
+script = ExtResource("4_mmd8j")
+tire_radius = 0.5
+metadata/_custom_type_script = "uid://787t50o6ky6u"
+
+[sub_resource type="Resource" id="Resource_mmd8j"]
+script = ExtResource("3_hbetw")
+tire_model = SubResource("Resource_bx7vq")
+spring_length = 0.3
+spring_stiffness = 200.0
+metadata/_custom_type_script = "uid://dnr4dw6v7viol"
+
+[sub_resource type="Resource" id="Resource_85251"]
+script = ExtResource("4_mmd8j")
+tire_radius = 0.5
+metadata/_custom_type_script = "uid://787t50o6ky6u"
+
+[sub_resource type="Resource" id="Resource_ynucw"]
+script = ExtResource("3_hbetw")
+tire_model = SubResource("Resource_85251")
+spring_length = 0.3
+spring_stiffness = 200.0
+metadata/_custom_type_script = "uid://dnr4dw6v7viol"
+
+[sub_resource type="Resource" id="Resource_x3piv"]
+script = ExtResource("4_mmd8j")
+tire_radius = 0.5
+metadata/_custom_type_script = "uid://787t50o6ky6u"
+
+[sub_resource type="Resource" id="Resource_kkigb"]
+script = ExtResource("3_hbetw")
+tire_model = SubResource("Resource_x3piv")
+spring_length = 0.3
+spring_stiffness = 200.0
+metadata/_custom_type_script = "uid://dnr4dw6v7viol"
+
+[sub_resource type="Resource" id="Resource_umec1"]
+script = ExtResource("4_mmd8j")
+tire_radius = 0.5
+metadata/_custom_type_script = "uid://787t50o6ky6u"
+
+[sub_resource type="Resource" id="Resource_jlqtu"]
+script = ExtResource("3_hbetw")
+tire_model = SubResource("Resource_umec1")
+spring_length = 0.3
+spring_stiffness = 200.0
+metadata/_custom_type_script = "uid://dnr4dw6v7viol"
+
+[sub_resource type="Resource" id="Resource_uukhu"]
+script = ExtResource("2_uukhu")
+torque_curve = SubResource("Curve_mmd8j")
+throttle_model = SubResource("Curve_ynucw")
+drivetrain_params = SubResource("Resource_hbetw")
+wheel_params_fl = SubResource("Resource_kkigb")
+wheel_params_fr = SubResource("Resource_jlqtu")
+wheel_params_bl = SubResource("Resource_mmd8j")
+wheel_params_br = SubResource("Resource_ynucw")
+
+[sub_resource type="BoxMesh" id="BoxMesh_jlqtu"]
+size = Vector3(2, 0.5, 4)
+
+[sub_resource type="BoxMesh" id="BoxMesh_xl6ir"]
+size = Vector3(1, 0.5686035, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_d2r2c"]
+size = Vector3(2, 0.5, 4)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_d2r2c"]
+height = 0.3
+
+[node name="car" type="Node3D" unique_id=2000124875]
+
+[node name="CarRigidBody" type="RigidBody3D" parent="." unique_id=1648240995]
+mass = 1000.0
+physics_material_override = SubResource("PhysicsMaterial_kkigb")
+script = ExtResource("1_cd047")
+car_params = SubResource("Resource_uukhu")
+
+[node name="CarBack" type="MeshInstance3D" parent="CarRigidBody" unique_id=2015359582]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0014564395, 0)
+mesh = SubResource("BoxMesh_jlqtu")
+
+[node name="CarBack" type="MeshInstance3D" parent="CarRigidBody/CarBack" unique_id=1707737528]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.53440225, 0.8876953)
+mesh = SubResource("BoxMesh_xl6ir")
+
+[node name="CarCollocion" type="CollisionShape3D" parent="CarRigidBody" unique_id=689963253]
+shape = SubResource("BoxShape3D_d2r2c")
+
+[node name="wheel_fl" type="RayCast3D" parent="CarRigidBody" unique_id=109126068]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.013, 0, -1.3965495)
+script = ExtResource("2_d7vpe")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CarRigidBody/wheel_fl" unique_id=1398994187]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.17748618, 0, -0.006896496)
+mesh = SubResource("CylinderMesh_d2r2c")
+
+[node name="wheel_fr" type="RayCast3D" parent="CarRigidBody" unique_id=1061535138]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.0073645, 0, -1.3962469)
+script = ExtResource("2_d7vpe")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CarRigidBody/wheel_fr" unique_id=922180232]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, -0.16540599, 0, -0.012331247)
+mesh = SubResource("CylinderMesh_d2r2c")
+
+[node name="wheel_bl" type="RayCast3D" parent="CarRigidBody" unique_id=392482441]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.0130515, 0, 1.0688372)
+script = ExtResource("2_d7vpe")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CarRigidBody/wheel_bl" unique_id=1872914408]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.17748618, 0, 0.0038654804)
+mesh = SubResource("CylinderMesh_d2r2c")
+
+[node name="wheel_br" type="RayCast3D" parent="CarRigidBody" unique_id=31195371]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.0073645, -2.9802322e-08, 1.0688372)
+script = ExtResource("2_d7vpe")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CarRigidBody/wheel_br" unique_id=1277583095]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, -0.16540599, 0, 0.0038655996)
+mesh = SubResource("CylinderMesh_d2r2c")
+
+[node name="EngineSound" type="AudioStreamPlayer3D" parent="CarRigidBody" unique_id=913562855]
+
+[node name="gui" parent="CarRigidBody" unique_id=361202176 instance=ExtResource("8_jlqtu")]
+offset_left = 3.0
+offset_right = 3.0

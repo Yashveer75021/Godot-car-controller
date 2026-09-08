@@ -1,0 +1,6 @@
+[gd_resource type="Resource" script_class="BrushTireModel" format=3 uid="uid://cb4tklyvggxk6"]
+
+[ext_resource type="Script" uid="uid://787t50o6ky6u" path="res://script/Vehicle/TireModel/brush_tire_model.gd" id="1_wdqnr"]
+
+[resource]
+script = ExtResource("1_wdqnr")

@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="CarParameters" format=3 uid="uid://cthfwhcn5qbyo"]
+
+[ext_resource type="Script" uid="uid://bpncgmdpx7xq3" path="res://script/Vehicle/car_params.gd" id="1_cd67i"]
+
+[resource]
+script = ExtResource("1_cd67i")
+max_handbrake_torque = 1500.0
+metadata/_custom_type_script = "uid://bpncgmdpx7xq3"

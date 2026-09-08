@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="DriveTrainParameters" format=3 uid="uid://gym74inpelnx"]
+
+[ext_resource type="Script" uid="uid://dusv21yvqp80g" path="res://script/Vehicle/drivetrain_params.gd" id="1_2icf6"]
+
+[resource]
+script = ExtResource("1_2icf6")
+metadata/_custom_type_script = "uid://dusv21yvqp80g"

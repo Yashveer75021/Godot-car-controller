@@ -1,0 +1,161 @@
+[gd_scene format=3 uid="uid://b5lei5q0xtlet"]
+
+[ext_resource type="Script" uid="uid://d334qry5yvrwc" path="res://script/Vehicle/base_Car.gd" id="1_d82so"]
+[ext_resource type="Script" uid="uid://cypblo36wnkun" path="res://script/Vehicle/diff_params.gd" id="2_r6w65"]
+[ext_resource type="Script" uid="uid://dusv21yvqp80g" path="res://script/Vehicle/drivetrain_params.gd" id="3_e6lfj"]
+[ext_resource type="Script" uid="uid://bpncgmdpx7xq3" path="res://script/Vehicle/car_params.gd" id="4_amgmh"]
+[ext_resource type="Script" uid="uid://dnr4dw6v7viol" path="res://script/Vehicle/wheel_params.gd" id="5_1jfmg"]
+[ext_resource type="Script" uid="uid://787t50o6ky6u" path="res://script/Vehicle/TireModel/brush_tire_model.gd" id="6_d7tup"]
+[ext_resource type="Script" uid="uid://dcvuin7vaw3kt" path="res://script/Vehicle/wheel_suspension.gd" id="7_7psl7"]
+[ext_resource type="PackedScene" uid="uid://xcr4r3ofacfl" path="res://assets/model/Hot_rod/hot_rod_body.glb" id="7_r6w65"]
+[ext_resource type="PackedScene" uid="uid://b8tj5b277nxm4" path="res://Scene/gui.tscn" id="8_ns5qd"]
+[ext_resource type="PackedScene" uid="uid://pyid3onechrb" path="res://assets/model/Hot_rod/hot_rod_wheel.glb" id="9_e6lfj"]
+[ext_resource type="Script" uid="uid://sd8vfycbsrna" path="res://script/camera/camera.gd" id="11_amgmh"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_kkigb"]
+
+[sub_resource type="Resource" id="Resource_e6lfj"]
+script = ExtResource("2_r6w65")
+metadata/_custom_type_script = "uid://cypblo36wnkun"
+
+[sub_resource type="Resource" id="Resource_hbetw"]
+script = ExtResource("3_e6lfj")
+gear_ratios = [3.1, 2.61, 2.1, 1.72, 1.2]
+automatic = false
+rear_diff = SubResource("Resource_e6lfj")
+metadata/_custom_type_script = "uid://dusv21yvqp80g"
+
+[sub_resource type="Curve" id="Curve_ynucw"]
+_data = [Vector2(0, 0), 0.0, 0.9094575, 0, 0, Vector2(1, 1), 0.99213606, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_mmd8j"]
+_data = [Vector2(0, 0.48484856), 0.0, 0.0, 0, 0, Vector2(0.21219513, 0.76363647), 0.56796545, 1.4199138, 0, 0, Vector2(0.35853657, 1), 0.0, 0.0, 0, 0, Vector2(0.745509, 0.67692304), 0.0, 0.0, 0, 0, Vector2(1, 0.35384613), 0.0, 0.0, 0, 0]
+point_count = 5
+
+[sub_resource type="Resource" id="Resource_bx7vq"]
+script = ExtResource("6_d7tup")
+tire_radius = 0.5
+metadata/_custom_type_script = "uid://787t50o6ky6u"
+
+[sub_resource type="Resource" id="Resource_mmd8j"]
+script = ExtResource("5_1jfmg")
+tire_model = SubResource("Resource_bx7vq")
+spring_length = 0.3
+spring_stiffness = 200.0
+metadata/_custom_type_script = "uid://dnr4dw6v7viol"
+
+[sub_resource type="Resource" id="Resource_85251"]
+script = ExtResource("6_d7tup")
+tire_radius = 0.5
+metadata/_custom_type_script = "uid://787t50o6ky6u"
+
+[sub_resource type="Resource" id="Resource_ynucw"]
+script = ExtResource("5_1jfmg")
+tire_model = SubResource("Resource_85251")
+spring_length = 0.3
+spring_stiffness = 200.0
+metadata/_custom_type_script = "uid://dnr4dw6v7viol"
+
+[sub_resource type="Resource" id="Resource_x3piv"]
+script = ExtResource("6_d7tup")
+tire_radius = 0.5
+metadata/_custom_type_script = "uid://787t50o6ky6u"
+
+[sub_resource type="Resource" id="Resource_kkigb"]
+script = ExtResource("5_1jfmg")
+tire_model = SubResource("Resource_x3piv")
+spring_length = 0.3
+spring_stiffness = 200.0
+metadata/_custom_type_script = "uid://dnr4dw6v7viol"
+
+[sub_resource type="Resource" id="Resource_umec1"]
+script = ExtResource("6_d7tup")
+tire_radius = 0.5
+metadata/_custom_type_script = "uid://787t50o6ky6u"
+
+[sub_resource type="Resource" id="Resource_jlqtu"]
+script = ExtResource("5_1jfmg")
+tire_model = SubResource("Resource_umec1")
+spring_length = 0.3
+spring_stiffness = 200.0
+metadata/_custom_type_script = "uid://dnr4dw6v7viol"
+
+[sub_resource type="Resource" id="Resource_uukhu"]
+script = ExtResource("4_amgmh")
+max_torque = 550.0
+max_engine_rpm = 6000.0
+torque_curve = SubResource("Curve_mmd8j")
+throttle_model = SubResource("Curve_ynucw")
+clutch_friction = 900.0
+drivetrain_params = SubResource("Resource_hbetw")
+wheel_params_fl = SubResource("Resource_kkigb")
+wheel_params_fr = SubResource("Resource_jlqtu")
+wheel_params_bl = SubResource("Resource_mmd8j")
+wheel_params_br = SubResource("Resource_ynucw")
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_e6lfj"]
+points = PackedVector3Array(1.2402543, -0.5659011, -3.2530441, 1.2402543, -0.6015764, -3.2645216, 1.2402543, -0.5304344, -3.2645216, 1.1532077, -0.68711364, 1.8603702, 1.2402543, -0.62369084, -3.2945812, 1.1532077, -0.72278893, 1.8488927, 1.2402543, -0.50832, -3.2945812, 1.1532077, -0.651647, 1.8488927, 0.62510765, -0.36290663, 1.8423343, 0.62510765, -0.67459595, 1.873487, 0.6006181, -0.7653489, 1.8827782, 0.5336964, -0.8316924, 1.8893366, 0.81350696, 0.09941161, 1.7565279, 1.2402543, -0.62369084, -3.3322923, 1.1532077, -0.7449034, 1.8182864, 0.44252765, -0.8561018, 1.8920693, 0.4565909, -0.9224453, 1.8488927, 1.2402543, -0.50832, -3.3322923, 1.0407015, 1.1179307, -2.7305534, 1.0407015, 1.0785, -2.09165, 1.0407015, 1.0638962, -1.8566383, 1.0407015, 0.9854522, -0.7280364, 1.1532077, -0.62953246, 1.8182864, 0.8472103, 0.053096414, 1.7565279, 0.24976385, -0.07416636, 1.8133678, 0.54194033, -0.40338033, 1.8467064, 0.75895107, 0.11714494, 1.7565279, 1.0118474, 0.9593737, -0.46952367, 1.0210613, -0.8625693, -3.6766117, 1.2402543, -0.6015764, -3.362352, 1.1532077, -0.7449034, 1.7811217, 0.4565909, -0.9445598, 1.8182864, 0.44252765, -0.9535308, 1.7811217, 1.0210613, -0.8667418, -0.33343554, -0.43400192, -0.8561018, 1.8920693, -0.015013576, -0.9316249, 1.8488927, 1.01112, 1.1490161, -3.221345, 1.2402543, -0.5304344, -3.362352, 0.9393488, 1.1677926, -3.150295, 0.9393488, 1.1024921, -2.09165, 0.9393488, 1.0878882, -1.8566383, 0.9393488, 1.0094444, -0.7280364, 0.9393488, 0.98858154, -0.5405736, -0.24123818, -0.07416636, 1.8133678, -0.5334147, -0.40338033, 1.8467064, -0.758427, 0.11714494, 1.7565279, 0.8426033, 0.9985957, -0.5405736, -1.0205373, -0.8625693, -3.6766117, 0.8292674, -0.77119046, -3.6908216, 0.8292674, -0.0065710545, -3.691368, 1.0210613, -0.79247046, -3.6766117, 1.2402543, -0.5659011, -3.3738294, -0.015013576, -0.9535308, 1.8182864, -0.47255468, -0.9535308, 1.7811217, -0.59209245, -0.7653489, 1.8827782, -0.52517074, -0.8316924, 1.8893366, -1.1834772, -0.68711364, 1.8603702, -1.1834772, -0.72278893, 1.8488927, -0.48686045, -0.9224453, 1.8488927, -0.48686045, -0.9445598, 1.8182864, 0.9393488, -0.016793787, -3.677158, 0.9071003, 1.1492248, -3.2246242, 0.8426033, 1.1778066, -3.150295, 0.8426033, 1.0979023, -1.8566383, 0.8426033, 1.0194584, -0.7280364, -0.616582, -0.36290663, 1.8423343, -0.8129828, 0.09941161, 1.7565279, -0.84207916, 0.9985957, -0.5405736, -1.0113233, 0.9593737, -0.46952367, -1.2368206, -0.62369084, -3.3322923, -1.2368206, -0.6015764, -3.362352, -1.2368206, -0.5659011, -3.3738294, -1.0205373, -0.79247046, -3.6766117, -0.82874334, -0.0065710545, -3.691368, -0.82874334, -0.77119046, -3.6908216, -1.0205373, -0.8667418, -0.33343554, -1.1834772, -0.7449034, 1.7811217, 0.00026202202, 1.1511023, -3.2514045, -1.1834772, -0.7449034, 1.8182864, -0.616582, -0.67459595, 1.873487, -1.1834772, -0.651647, 1.8488927, -1.2368206, -0.5659011, -3.2530441, -1.2368206, -0.6015764, -3.2645216, -1.2368206, -0.62369084, -3.2945812, -0.84207916, 1.1778066, -3.150295, -0.84207916, 1.0979023, -1.8566383, -0.84207916, 1.0194584, -0.7280364, -0.8466861, 0.053096414, 1.7565279, -0.9385823, 0.98858154, -0.5405736, -1.0401773, 0.9854522, -0.7280364, -1.1834772, -0.62953246, 1.8182864, -1.2368206, -0.5304344, -3.362352, -1.0105959, 1.1490161, -3.221345, -0.9385823, -0.016793787, -3.677158, -0.9065763, 1.1492248, -3.2246242, -1.2368206, -0.50832, -3.2945812, -1.2368206, -0.5304344, -3.2645216, -0.9385823, 1.1677926, -3.150295, -0.9385823, 1.1024921, -2.09165, -0.9385823, 1.0878882, -1.8566383, -0.9385823, 1.0094444, -0.7280364, -1.0401773, 1.0638962, -1.8566383, -1.2368206, -0.50832, -3.3322923, -1.0401773, 1.1179307, -2.7305534, -1.0401773, 1.0785, -2.09165)
+
+[node name="car" type="Node3D" unique_id=2000124875]
+
+[node name="CarRigidBody" type="RigidBody3D" parent="." unique_id=1648240995]
+mass = 1100.0
+physics_material_override = SubResource("PhysicsMaterial_kkigb")
+script = ExtResource("1_d82so")
+car_params = SubResource("Resource_uukhu")
+
+[node name="hot_rod_body" parent="CarRigidBody" unique_id=960332351 instance=ExtResource("7_r6w65")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0.6192275, -0.75593966)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CarRigidBody" unique_id=140975907]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0.6192275, -0.75593966)
+shape = SubResource("ConvexPolygonShape3D_e6lfj")
+
+[node name="wheel_fl" type="RayCast3D" parent="CarRigidBody" unique_id=109126068]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.433, -0.062619686, -2.55255)
+script = ExtResource("7_7psl7")
+
+[node name="hot_rod_wheel" parent="CarRigidBody/wheel_fl" unique_id=124761848 instance=ExtResource("9_e6lfj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.055874586, 0, 0)
+
+[node name="wheel_fr" type="RayCast3D" parent="CarRigidBody" unique_id=1061535138]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.437, -0.063, -2.553)
+script = ExtResource("7_7psl7")
+
+[node name="hot_rod_wheel" parent="CarRigidBody/wheel_fr" unique_id=1274461608 instance=ExtResource("9_e6lfj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.022349834, 0, 0)
+
+[node name="wheel_bl" type="RayCast3D" parent="CarRigidBody" unique_id=392482441]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5121458, 0.052021235, 2.5552137)
+script = ExtResource("7_7psl7")
+
+[node name="hot_rod_wheel" parent="CarRigidBody/wheel_bl" unique_id=438422370 instance=ExtResource("9_e6lfj")]
+
+[node name="wheel_br" type="RayCast3D" parent="CarRigidBody" unique_id=31195371]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.53967, 0.052, 2.555)
+script = ExtResource("7_7psl7")
+
+[node name="hot_rod_wheel" parent="CarRigidBody/wheel_br" unique_id=1593467132 instance=ExtResource("9_e6lfj")]
+
+[node name="EngineSound" type="AudioStreamPlayer3D" parent="CarRigidBody" unique_id=913562855]
+
+[node name="gui" parent="CarRigidBody" unique_id=361202176 instance=ExtResource("8_ns5qd")]
+offset_left = 3.0
+offset_right = 3.0
+
+[node name="Camera3D" type="Camera3D" parent="CarRigidBody" unique_id=1287536665 node_paths=PackedStringArray("target_vehicle")]
+transform = Transform3D(1, 0, 0, 0, 0.8735015, 0.48682165, 0, -0.48682165, 0.8735015, 0, 2.754243, 5.2797813)
+script = ExtResource("11_amgmh")
+target_vehicle = NodePath("../target")
+follow_distance = 10.0
+camera_height = 2.0
+
+[node name="target" type="Marker3D" parent="CarRigidBody" unique_id=366055749]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6827712, 0)
+
+[editable path="CarRigidBody/hot_rod_body"]
