@@ -42,7 +42,7 @@ var prev_pos: Vector3 = Vector3.ZERO
 var spring_curr_length: float = spring_length
 
 @onready var car = $'..' #Get the parent node as car
-@onready var wheelmesh = $hot_rod_wheel
+@onready var wheelmesh = $wheelmesh
 
 
 func _ready() -> void:
@@ -139,16 +139,18 @@ func apply_forces(opposite_comp, delta):
 	slip_vec.y = 0.0 # Y slip is the longitudinal Z slip
 	
 	if is_colliding():
-		if not is_zero_approx(z_vel):
-			slip_vec.y = (z_vel - spin * tire_radius) / abs(z_vel)
-		else:
-			slip_vec.y = (z_vel - spin * tire_radius) / abs(z_vel + 0.0000001)
-		
-		#var min_speed_denominator = max(abs(z_vel), 0.5)
-		#slip_vec.y = (z_vel - spin * tire_radius) / min_speed_denominator
-	
+		var min_speed_denominator = max(abs(z_vel), 0.5)
+		slip_vec.y = (z_vel - spin * tire_radius) / min_speed_denominator
+		slip_vec.y = clamp(slip_vec.y, -1.5, 1.5)
+		#if not is_zero_approx(z_vel):
+			#slip_vec.y = (z_vel - spin * tire_radius) / abs(z_vel)
+		#else:
+			#slip_vec.y = (z_vel - spin * tire_radius) / abs(z_vel + 0.0000001)
+				
 		if spring_load_mm !=0:
 			y_force += anti_roll * (spring_load_mm - opposite_comp)
+		
+		rolling_resistance = rol_res_surface_mul * y_force
 		
 		force_vec = tire_model.update_tire_forces(slip_vec, y_force, surface_mu)
 		

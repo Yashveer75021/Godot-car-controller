@@ -121,8 +121,8 @@ func _physics_process(delta):
 		torque_out = 0
 		rpm -= 500 
 	
-#	if rpm <= car_params.rpm_idle + 10 and abs(z_vel) < 10 and throttle_input <= 0.05:
-#		clutch_input = 1.0
+	if rpm <= car_params.rpm_idle + 10 and abs(z_vel) < 2.0 and throttle_input <= 0.05:
+		clutch_input = 1.0
 	
 	var next_gear_rpm = 0
 	if drivetrain.selected_gear < car_params.drivetrain_params.gear_ratios.size():

@@ -95,7 +95,6 @@ max_engine_rpm = 5500.0
 torque_curve = SubResource("Curve_mmd8j")
 throttle_model = SubResource("Curve_ynucw")
 engine_brake = 150.0
-engine_moment = 0.14
 clutch_friction = 900.0
 drivetrain_params = SubResource("Resource_hbetw")
 wheel_params_fl = SubResource("Resource_kkigb")

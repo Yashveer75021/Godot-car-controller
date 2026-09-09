@@ -8,7 +8,7 @@
 [ext_resource type="Script" uid="uid://dnr4dw6v7viol" path="res://script/Vehicle/wheel_params.gd" id="3_hbetw"]
 [ext_resource type="Script" uid="uid://787t50o6ky6u" path="res://script/Vehicle/TireModel/brush_tire_model.gd" id="4_mmd8j"]
 [ext_resource type="PackedScene" uid="uid://b8tj5b277nxm4" path="res://Scene/gui.tscn" id="8_jlqtu"]
-[ext_resource type="Material" uid="uid://bdcuuya7oexpb" path="res://Resources/material/hot_rod.tres" id="8_x3piv"]
+[ext_resource type="Material" uid="uid://bdcuuya7oexpb" path="res://assets/material/hot_rod.tres" id="8_x3piv"]
 
 [sub_resource type="Resource" id="Resource_2icf6"]
 script = ExtResource("2_ynucw")

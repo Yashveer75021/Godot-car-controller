@@ -1,0 +1,11 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://bdcuuya7oexpb"]
+
+[ext_resource type="Texture2D" uid="uid://bj4wpx4me5bpi" path="res://Resources/material/hot_rod_BaseColor.png" id="1_bb2ui"]
+[ext_resource type="Texture2D" uid="uid://b0ob2btn18fn1" path="res://Resources/material/hot_rod_Attributes.png" id="2_p4ofl"]
+
+[resource]
+albedo_texture = ExtResource("1_bb2ui")
+metallic = 1.0
+metallic_texture = ExtResource("2_p4ofl")
+metallic_texture_channel = 1
+texture_filter = 0
