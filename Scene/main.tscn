@@ -31,8 +31,8 @@ shadow_enabled = true
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=835050439]
 environment = SubResource("Environment_d2r2c")
 
-[node name="Camera3D" type="Camera3D" parent="." unique_id=556177106]
-transform = Transform3D(-4.1527908e-08, 0.31210446, -0.9500478, 1.3642519e-08, 0.9500478, 0.31210446, 1, 0, -4.371139e-08, -8.424759, 2.8779826, 182.56834)
+[node name="Camera3D" type="Camera3D" parent="." unique_id=263410200]
+transform = Transform3D(-2.9802322e-08, 0, -1, 0, 1, 0, 1, 0, -2.9802322e-08, -2.9969366, 1.6783652, 193.07089)
 
 [node name="world" type="Node3D" parent="." unique_id=355694744]
 
@@ -43,15 +43,15 @@ size = Vector3(500, 1, 500)
 material = SubResource("StandardMaterial3D_d2r2c")
 
 [node name="CSGBox3D2" type="CSGBox3D" parent="world" unique_id=965607728]
-transform = Transform3D(10.36796, 0, 0, 0, 0.97707987, 0, 0, 0, 0.37592232, 0, 0.6426997, 181.74577)
+transform = Transform3D(10.36796, 0, 0, 0, 0.97707987, 0, 0, 0, 0.37592232, 0, 0.6426997, 174.66698)
 use_collision = true
 
 [node name="CSGBox3D3" type="CSGBox3D" parent="world" unique_id=880404181]
-transform = Transform3D(10.36796, 0, 0, 0, 0.97707987, 0, 0, 0, 0.37592232, 0, 0.6426997, 182.54585)
+transform = Transform3D(10.36796, 0, 0, 0, 0.97707987, 0, 0, 0, 0.37592232, 0, 0.6426997, 175.46706)
 use_collision = true
 
 [node name="CSGBox3D4" type="CSGBox3D" parent="world" unique_id=1978251736]
-transform = Transform3D(10.36796, 0, 0, 0, 0.97707987, 0, 0, 0, 0.37592232, 0, 0.6426997, 183.41164)
+transform = Transform3D(10.36796, 0, 0, 0, 0.97707987, 0, 0, 0, 0.37592232, 0, 0.6426997, 176.33284)
 use_collision = true
 
 [node name="CSGBox3D5" type="CSGBox3D" parent="world" unique_id=1079139261]

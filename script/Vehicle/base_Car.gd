@@ -161,6 +161,7 @@ func _physics_process(delta):
 	susp_comp[0] = wheel_fr.apply_forces(prev_comp[1], delta)
 	susp_comp[1] = wheel_fl.apply_forces(prev_comp[0], delta)
 	
+	
 	drag_force()
 
 
