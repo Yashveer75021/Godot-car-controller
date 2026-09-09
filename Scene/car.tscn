@@ -8,8 +8,7 @@
 [ext_resource type="Script" uid="uid://dnr4dw6v7viol" path="res://script/Vehicle/wheel_params.gd" id="3_hbetw"]
 [ext_resource type="Script" uid="uid://787t50o6ky6u" path="res://script/Vehicle/TireModel/brush_tire_model.gd" id="4_mmd8j"]
 [ext_resource type="PackedScene" uid="uid://b8tj5b277nxm4" path="res://Scene/gui.tscn" id="8_jlqtu"]
-
-[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_kkigb"]
+[ext_resource type="Material" uid="uid://bdcuuya7oexpb" path="res://assets/material/hot_rod.tres" id="8_x3piv"]
 
 [sub_resource type="Resource" id="Resource_2icf6"]
 script = ExtResource("2_ynucw")
@@ -80,6 +79,8 @@ metadata/_custom_type_script = "uid://dnr4dw6v7viol"
 
 [sub_resource type="Resource" id="Resource_uukhu"]
 script = ExtResource("2_uukhu")
+max_steer = 0.35
+max_brake_force = 25000.0
 torque_curve = SubResource("Curve_mmd8j")
 throttle_model = SubResource("Curve_ynucw")
 drivetrain_params = SubResource("Resource_hbetw")
@@ -104,7 +105,6 @@ height = 0.3
 
 [node name="CarRigidBody" type="RigidBody3D" parent="." unique_id=1648240995]
 mass = 1000.0
-physics_material_override = SubResource("PhysicsMaterial_kkigb")
 script = ExtResource("1_cd047")
 car_params = SubResource("Resource_uukhu")
 
@@ -124,36 +124,40 @@ unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.013, 0, -1.3965495)
 script = ExtResource("2_d7vpe")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="CarRigidBody/wheel_fl" unique_id=1398994187]
+[node name="wheelmesh" type="MeshInstance3D" parent="CarRigidBody/wheel_fl" unique_id=1398994187]
 transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.17748618, 0, -0.006896496)
 mesh = SubResource("CylinderMesh_d2r2c")
+surface_material_override/0 = ExtResource("8_x3piv")
 
 [node name="wheel_fr" type="RayCast3D" parent="CarRigidBody" unique_id=1061535138]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.0073645, 0, -1.3962469)
 script = ExtResource("2_d7vpe")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="CarRigidBody/wheel_fr" unique_id=922180232]
-transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, -0.16540599, 0, -0.012331247)
+[node name="wheelmesh" type="MeshInstance3D" parent="CarRigidBody/wheel_fr" unique_id=922180232]
+transform = Transform3D(4.371139e-08, 1, -8.742278e-08, 1, -4.371139e-08, 0, -3.821371e-15, -8.742278e-08, -1, -0.16540599, 0, -0.012331247)
 mesh = SubResource("CylinderMesh_d2r2c")
+surface_material_override/0 = ExtResource("8_x3piv")
 
 [node name="wheel_bl" type="RayCast3D" parent="CarRigidBody" unique_id=392482441]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.0130515, 0, 1.0688372)
 script = ExtResource("2_d7vpe")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="CarRigidBody/wheel_bl" unique_id=1872914408]
+[node name="wheelmesh" type="MeshInstance3D" parent="CarRigidBody/wheel_bl" unique_id=1872914408]
 transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.17748618, 0, 0.0038654804)
 mesh = SubResource("CylinderMesh_d2r2c")
+surface_material_override/0 = ExtResource("8_x3piv")
 
 [node name="wheel_br" type="RayCast3D" parent="CarRigidBody" unique_id=31195371]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.0073645, -2.9802322e-08, 1.0688372)
 script = ExtResource("2_d7vpe")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="CarRigidBody/wheel_br" unique_id=1277583095]
-transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, -0.16540599, 0, 0.0038655996)
+[node name="wheelmesh" type="MeshInstance3D" parent="CarRigidBody/wheel_br" unique_id=1277583095]
+transform = Transform3D(4.371139e-08, 1, -8.742278e-08, 1, -4.371139e-08, 0, -3.821371e-15, -8.742278e-08, -1, -0.16540599, 0, 0.0038655996)
 mesh = SubResource("CylinderMesh_d2r2c")
+surface_material_override/0 = ExtResource("8_x3piv")
 
 [node name="EngineSound" type="AudioStreamPlayer3D" parent="CarRigidBody" unique_id=913562855]
 

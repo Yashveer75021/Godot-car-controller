@@ -126,7 +126,7 @@ unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.433, -0.062619686, -2.55255)
 script = ExtResource("7_7psl7")
 
-[node name="hot_rod_wheel" parent="CarRigidBody/wheel_fl" unique_id=124761848 instance=ExtResource("9_e6lfj")]
+[node name="wheelmesh" parent="CarRigidBody/wheel_fl" unique_id=124761848 instance=ExtResource("9_e6lfj")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.055874586, 0, 0)
 
 [node name="wheel_fr" type="RayCast3D" parent="CarRigidBody" unique_id=1061535138]
@@ -134,7 +134,7 @@ unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.437, -0.063, -2.553)
 script = ExtResource("7_7psl7")
 
-[node name="hot_rod_wheel" parent="CarRigidBody/wheel_fr" unique_id=1274461608 instance=ExtResource("9_e6lfj")]
+[node name="wheelmesh" parent="CarRigidBody/wheel_fr" unique_id=1274461608 instance=ExtResource("9_e6lfj")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.022349834, 0, 0)
 
 [node name="wheel_bl" type="RayCast3D" parent="CarRigidBody" unique_id=392482441]
@@ -142,14 +142,14 @@ unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5121458, 0.052021235, 2.5552137)
 script = ExtResource("7_7psl7")
 
-[node name="hot_rod_wheel" parent="CarRigidBody/wheel_bl" unique_id=438422370 instance=ExtResource("9_e6lfj")]
+[node name="wheelmesh" parent="CarRigidBody/wheel_bl" unique_id=438422370 instance=ExtResource("9_e6lfj")]
 
 [node name="wheel_br" type="RayCast3D" parent="CarRigidBody" unique_id=31195371]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.53967, 0.052, 2.555)
 script = ExtResource("7_7psl7")
 
-[node name="hot_rod_wheel" parent="CarRigidBody/wheel_br" unique_id=1593467132 instance=ExtResource("9_e6lfj")]
+[node name="wheelmesh" parent="CarRigidBody/wheel_br" unique_id=1593467132 instance=ExtResource("9_e6lfj")]
 
 [node name="EngineSound" type="AudioStreamPlayer3D" parent="CarRigidBody" unique_id=913562855]
 
