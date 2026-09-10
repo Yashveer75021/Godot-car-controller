@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://ciqus0u5qt4i4"]
 
 [ext_resource type="Texture2D" uid="uid://irmpoku3b0mo" path="res://prototype/Vector/texture_09.svg" id="1_f6udf"]
-[ext_resource type="PackedScene" uid="uid://b5lei5q0xtlet" path="res://Scene/hot_rod.tscn" id="2_sblpm"]
+[ext_resource type="PackedScene" uid="uid://r282sygw2yqb" path="res://Scene/car.tscn" id="2_sblpm"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_f43sq"]
 sky_top_color = Color(0.12264869, 0.4146441, 0.80153394, 1)
@@ -24,7 +24,7 @@ uv2_world_triplanar = true
 [node name="main" type="Node3D" unique_id=307953046]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=66442851]
-transform = Transform3D(0.8043108, 0.5940523, -0.013643708, -0.06624708, 0.11246522, 0.9914448, 0.5905046, -0.79652584, 0.12981121, 0, 100, 0)
+transform = Transform3D(0.80604166, 0.5911139, 0.02968768, 0.14414868, -0.24471585, 0.9588197, 0.57403684, -0.7685692, -0.2824594, 0, 100, 0)
 light_energy = 1.155
 shadow_enabled = true
 
@@ -56,7 +56,7 @@ transform = Transform3D(-4.5319788e-07, -0.9770798, 0, 10.36796, -4.2709516e-08,
 use_collision = true
 
 [node name="Camera3D" type="Camera3D" parent="." unique_id=263410200]
-transform = Transform3D(-2.9802322e-08, 0, -1, 0, 1, 0, 1, 0, -2.9802322e-08, -2.9969363, 1.6783652, 193.07089)
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -3.850614, 1.5664444, 192.2383)
 
 [node name="car" parent="." unique_id=2000124875 instance=ExtResource("2_sblpm")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.675552, 2.493468, 192.4494)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.3203025, 1.6877029, 192.29822)

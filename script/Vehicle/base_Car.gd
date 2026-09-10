@@ -48,10 +48,11 @@ var prev_pos: Vector3 = Vector3.ZERO
 var z_vel: float = 0.0
 var x_vel: float = 0.0
 
-@onready var wheel_fl = %wheel_fl as RaycastSuspension
 @onready var wheel_fr = %wheel_fr as RaycastSuspension
-@onready var wheel_bl = %wheel_bl as RaycastSuspension
+@onready var wheel_fl = %wheel_fl as RaycastSuspension
 @onready var wheel_br = %wheel_br as RaycastSuspension
+@onready var wheel_bl = %wheel_bl as RaycastSuspension
+
 @onready var audioplayer = $EngineSound
 
 
@@ -97,15 +98,16 @@ func _physics_process(delta):
 	x_vel = local_vel.x
 	
 	##### Steerin with steer speed #####
-	if (steering_input < steering_amount):
-		steering_amount -= car_params.steer_speed * delta
-		if (steering_input > steering_amount):
-			steering_amount = steering_input
-	
-	elif (steering_input > steering_amount):
-		steering_amount += car_params.steer_speed * delta
-		if (steering_input < steering_amount):
-			steering_amount = steering_input
+	#if (steering_input < steering_amount):
+		#steering_amount -= car_params.steer_speed * delta
+		#if (steering_input > steering_amount):
+			#steering_amount = steering_input
+	#
+	#elif (steering_input > steering_amount):
+		#steering_amount += car_params.steer_speed * delta
+		#if (steering_input < steering_amount):
+			#steering_amount = steering_input
+	steering_amount = move_toward(steering_amount, steering_input, car_params.steer_speed * delta)
 	
 	wheel_fl.steer(steering_amount, car_params.max_steer)
 	wheel_fr.steer(steering_amount, car_params.max_steer)
@@ -123,6 +125,40 @@ func _physics_process(delta):
 	
 	if rpm <= car_params.rpm_idle + 10 and abs(z_vel) < 2.0 and throttle_input <= 0.05:
 		clutch_input = 1.0
+		#rpm = move_toward(rpm, car_params.rpm_idle, 500.0 * delta)
+		
+	###### MY Engine loop #####
+	## Idle Control Valve (The engine fights to stay alive)
+	#var idle_rpm_drop = car_params.rpm_idle - rpm
+	#var idle_throttle = 0.0
+#
+	#if idle_rpm_drop > 0 and fuel > 0.0:
+		#idle_throttle = clampf(idle_rpm_drop / 400.0, 0.0, 1.0)
+#
+	#var actual_throttle = max(throttle_input, idle_throttle)
+	#torque_out = get_engine_torque(rpm, actual_throttle)
+#
+	## Stalling Mechanic
+	#var is_stalled = false
+	#if rpm < 360.0:
+		#is_stalled = true
+#
+	#if is_stalled or fuel <= 0.0:
+		#torque_out = 0.0
+		#stop_engine_sound()
+	#else:
+		#play_engine_sound()
+#
+	##Apply Forces
+	#engine_net_torque = torque_out + clutch_reaction_torque
+	#rpm += AV_2_RPM * delta * engine_net_torque / car_params.engine_moment
+#
+	## Rev Limiter (Restored)
+	#if rpm >= car_params.max_engine_rpm:
+		#torque_out = 0.0
+		#rpm -= 500 
+#
+	#engine_angular_vel = rpm / AV_2_RPM
 	
 	var next_gear_rpm = 0
 	if drivetrain.selected_gear < car_params.drivetrain_params.gear_ratios.size():
@@ -155,11 +191,15 @@ func _physics_process(delta):
 	burn_fuel(delta)
 	
 	##### Anti-roll bar and applying forces #####
-	var prev_comp := susp_comp
-	susp_comp[2] = wheel_bl.apply_forces(prev_comp[3], delta)
-	susp_comp[3] = wheel_br.apply_forces(prev_comp[2], delta)
-	susp_comp[0] = wheel_fr.apply_forces(prev_comp[1], delta)
-	susp_comp[1] = wheel_fl.apply_forces(prev_comp[0], delta)
+	var new_comp_bl = wheel_bl.apply_forces(susp_comp[3], delta)
+	var new_comp_br = wheel_br.apply_forces(susp_comp[2], delta)
+	var new_comp_fr = wheel_fr.apply_forces(susp_comp[1], delta)
+	var new_comp_fl = wheel_fl.apply_forces(susp_comp[0], delta)
+
+	susp_comp[2] = new_comp_bl
+	susp_comp[3] = new_comp_br
+	susp_comp[0] = new_comp_fr
+	susp_comp[1] = new_comp_fl
 	
 	
 	drag_force()
@@ -216,7 +256,7 @@ func engage(delta):
 		
 	elif car_params.drivetrain_params.drivetype == car_params.drivetrain_params.DRIVE_TYPE.AWD:
 		gearbox_shaft_speed = (avg_front_spin + avg_rear_spin) * 0.5 * drivetrain.get_gearing()
-		
+	
 	var speed_error = engine_angular_vel - gearbox_shaft_speed
 	var clutch_kick = abs(speed_error) * 0.2
 	var react_torque := drivetrain.reaction_torque
@@ -228,6 +268,7 @@ func engage(delta):
 	drive_reaction_torque = reaction_torques.x * (1 - clutch_input)
 	clutch_reaction_torque = reaction_torques.y * (1 - clutch_input)
 	
+	#print("Engine: ", torque_out, " | Reaction: ", clutch_reaction_torque)
 	net_drive = drive_reaction_torque
 	drivetrain.drivetrain(net_drive, rear_brake_torque, front_brake_torque,
 						[wheel_bl, wheel_br, wheel_fl, wheel_fr], clutch_input, delta)

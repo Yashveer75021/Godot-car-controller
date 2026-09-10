@@ -138,6 +138,11 @@ func apply_forces(opposite_comp, delta):
 	slip_vec.x = asin(clamp(-planar_vect.x, -1, 1)) # X slip is lateral slip
 	slip_vec.y = 0.0 # Y slip is the longitudinal Z slip
 	
+	######## debug area 
+	#print(spin)
+
+	
+	
 	if is_colliding():
 		var min_speed_denominator = max(abs(z_vel), 0.5)
 		slip_vec.y = (z_vel - spin * tire_radius) / min_speed_denominator
@@ -167,21 +172,54 @@ func apply_forces(opposite_comp, delta):
 		return 0.0
 
 
+#func apply_torque(drive_torque, brake_torque, drive_inertia, delta):
+	#var prev_spin = spin
+	#var net_torque = force_vec.y * tire_radius
+	#net_torque += drive_torque
+	##this below function create a bug when we dont press the gas and brake the wheel jitter 
+#
+	#if abs(spin) < 5 and brake_torque > abs(net_torque):
+		#spin = 0
+	#else:
+		#net_torque -= (brake_torque + rolling_resistance) * sign(spin)
+		#spin += delta * net_torque / (wheel_inertia + drive_inertia)
+		#
+	#print(net_torque)
+	#if drive_torque * delta == 0:
+		#return 0.5
+	#else:
+		#return (spin - prev_spin) * (wheel_inertia + drive_inertia) / (drive_torque * delta)
+		##return spin * (wheel_inertia + drive_inertia) / (drive_torque * delta)
+
 func apply_torque(drive_torque, brake_torque, drive_inertia, delta):
 	var prev_spin = spin
-	var net_torque = force_vec.y * tire_radius
-	net_torque += drive_torque
-	if abs(spin) < 5 and brake_torque > abs(net_torque):
-		spin = 0
+	var total_inertia = wheel_inertia + (drive_inertia * 0.5)
+	
+	#  Calculate road grip torque
+	var road_torque = force_vec.y * tire_radius
+	
+	# Prevent the tire grip from mathematically overshooting ground speed
+	var sync_spin = z_vel / tire_radius
+	var torque_to_sync = (sync_spin - spin) * total_inertia / delta
+	
+	if torque_to_sync > 0:
+		road_torque = clamp(road_torque, -99999.0, torque_to_sync)
 	else:
-		net_torque -= (brake_torque + rolling_resistance) * sign(spin)
-		spin += delta * net_torque / (wheel_inertia + drive_inertia)
-
+		road_torque = clamp(road_torque, torque_to_sync, 99999.0)
+		
+	# Add engine power
+	var net_torque = road_torque + drive_torque 
+	spin += delta * net_torque / total_inertia
+	
+	# Apply brakes and rolling resistance cleanly
+	var resistance_torque = (brake_torque + rolling_resistance) 
+	var speed_loss = delta * resistance_torque / total_inertia
+	spin = move_toward(spin, 0, speed_loss)
+	print(speed_loss)
 	if drive_torque * delta == 0:
 		return 0.5
 	else:
-		return (spin - prev_spin) * (wheel_inertia + drive_inertia) / (drive_torque * delta)
-
+		return (spin - prev_spin) * total_inertia / (drive_torque * delta)
 
 func set_spin(value):
 	spin = value 

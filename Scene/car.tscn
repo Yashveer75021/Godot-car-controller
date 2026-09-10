@@ -16,7 +16,8 @@ metadata/_custom_type_script = "uid://cypblo36wnkun"
 
 [sub_resource type="Resource" id="Resource_hbetw"]
 script = ExtResource("2_mmd8j")
-gear_ratios = [3.1, 2.61, 2.1, 1.72, 1.2]
+gear_ratios = [3.5, 2.61, 2.1, 1.72, 1.2]
+final_drive = 4.0
 automatic = false
 rear_diff = SubResource("Resource_2icf6")
 metadata/_custom_type_script = "uid://dusv21yvqp80g"
@@ -26,7 +27,7 @@ _data = [Vector2(0, 0), 0.0, 1.1110187, 0, 0, Vector2(1, 1), -0.2193245, 0.0, 0,
 point_count = 2
 
 [sub_resource type="Curve" id="Curve_mmd8j"]
-_data = [Vector2(0, 0.3615384), 0.0, 0.0, 0, 0, Vector2(0.25149703, 0.91538453), 0.0, 0.0, 0, 0, Vector2(0.494012, 0.9846153), 0.0, 0.0, 0, 0, Vector2(0.745509, 0.67692304), 0.0, 0.0, 0, 0, Vector2(1, 0.35384613), 0.0, 0.0, 0, 0]
+_data = [Vector2(0, 0.4022346), 0.0, 0.0, 0, 0, Vector2(0.25149703, 0.91538453), 0.0, 0.0, 0, 0, Vector2(0.494012, 0.9846153), 0.0, 0.0, 0, 0, Vector2(0.745509, 0.67692304), 0.0, 0.0, 0, 0, Vector2(1, 0.35384613), 0.0, 0.0, 0, 0]
 point_count = 5
 
 [sub_resource type="Resource" id="Resource_bx7vq"]
@@ -38,7 +39,6 @@ metadata/_custom_type_script = "uid://787t50o6ky6u"
 script = ExtResource("3_hbetw")
 tire_model = SubResource("Resource_bx7vq")
 spring_length = 0.3
-spring_stiffness = 200.0
 metadata/_custom_type_script = "uid://dnr4dw6v7viol"
 
 [sub_resource type="Resource" id="Resource_85251"]
@@ -50,7 +50,6 @@ metadata/_custom_type_script = "uid://787t50o6ky6u"
 script = ExtResource("3_hbetw")
 tire_model = SubResource("Resource_85251")
 spring_length = 0.3
-spring_stiffness = 200.0
 metadata/_custom_type_script = "uid://dnr4dw6v7viol"
 
 [sub_resource type="Resource" id="Resource_x3piv"]
@@ -62,7 +61,6 @@ metadata/_custom_type_script = "uid://787t50o6ky6u"
 script = ExtResource("3_hbetw")
 tire_model = SubResource("Resource_x3piv")
 spring_length = 0.3
-spring_stiffness = 200.0
 metadata/_custom_type_script = "uid://dnr4dw6v7viol"
 
 [sub_resource type="Resource" id="Resource_umec1"]
@@ -74,7 +72,6 @@ metadata/_custom_type_script = "uid://787t50o6ky6u"
 script = ExtResource("3_hbetw")
 tire_model = SubResource("Resource_umec1")
 spring_length = 0.3
-spring_stiffness = 200.0
 metadata/_custom_type_script = "uid://dnr4dw6v7viol"
 
 [sub_resource type="Resource" id="Resource_uukhu"]
@@ -83,6 +80,7 @@ max_steer = 0.35
 max_brake_force = 25000.0
 torque_curve = SubResource("Curve_mmd8j")
 throttle_model = SubResource("Curve_ynucw")
+engine_brake = 50.0
 drivetrain_params = SubResource("Resource_hbetw")
 wheel_params_fl = SubResource("Resource_kkigb")
 wheel_params_fr = SubResource("Resource_jlqtu")
