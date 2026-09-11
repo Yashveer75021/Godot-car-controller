@@ -124,8 +124,8 @@ func _physics_process(delta):
 		rpm -= 500 
 	
 	if rpm <= car_params.rpm_idle + 10 and abs(z_vel) < 2.0 and throttle_input <= 0.05:
-		clutch_input = 1.0
-		#rpm = move_toward(rpm, car_params.rpm_idle, 500.0 * delta)
+		#sclutch_input = 1.0
+		rpm = move_toward(rpm, car_params.rpm_idle, 1000.0 * delta)
 		
 	###### MY Engine loop #####
 	## Idle Control Valve (The engine fights to stay alive)
@@ -191,15 +191,20 @@ func _physics_process(delta):
 	burn_fuel(delta)
 	
 	##### Anti-roll bar and applying forces #####
-	var new_comp_bl = wheel_bl.apply_forces(susp_comp[3], delta)
-	var new_comp_br = wheel_br.apply_forces(susp_comp[2], delta)
-	var new_comp_fr = wheel_fr.apply_forces(susp_comp[1], delta)
-	var new_comp_fl = wheel_fl.apply_forces(susp_comp[0], delta)
-
-	susp_comp[2] = new_comp_bl
-	susp_comp[3] = new_comp_br
-	susp_comp[0] = new_comp_fr
-	susp_comp[1] = new_comp_fl
+	susp_comp[2] = wheel_bl.apply_forces(susp_comp[3], delta)
+	susp_comp[3] = wheel_br.apply_forces(susp_comp[2], delta)
+	susp_comp[0] = wheel_fr.apply_forces(susp_comp[1], delta)
+	susp_comp[1] = wheel_fl.apply_forces(susp_comp[0], delta)
+	
+	#var new_comp_bl = wheel_bl.apply_forces(susp_comp[3], delta)
+	#var new_comp_br = wheel_br.apply_forces(susp_comp[2], delta)
+	#var new_comp_fr = wheel_fr.apply_forces(susp_comp[1], delta)
+	#var new_comp_fl = wheel_fl.apply_forces(susp_comp[0], delta)
+#
+	#susp_comp[2] = new_comp_bl
+	#susp_comp[3] = new_comp_br
+	#susp_comp[0] = new_comp_fr
+	#susp_comp[1] = new_comp_fl
 	
 	
 	drag_force()

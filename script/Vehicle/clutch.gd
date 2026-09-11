@@ -7,7 +7,7 @@ var locked := true
 var prev_av := 0.0
 
 func get_reaction_torques(av1: float, av2: float, t1: float, t2: float, slip_torque: float, kick := 0.0):
-	var clutch_torque := friction + kick
+	var max_clutch_torque := slip_torque + kick
 	var delta_torque := t1 - t2
 	var delta_av := av1 - av2
 	var reaction_torques := Vector2.ZERO
@@ -20,11 +20,19 @@ func get_reaction_torques(av1: float, av2: float, t1: float, t2: float, slip_tor
 		if absf(delta_av) < 0.5:
 			locked = true
 	
-	if av1 < av2:
-		reaction_torques.x = -clutch_torque
-		reaction_torques.y = clutch_torque
-	else:
-		reaction_torques.x = clutch_torque
-		reaction_torques.y = -clutch_torque
+	
+	# Apply torque smoothly based on the difference in speed. 
+	# A stiffness of 200.0 acts as a viscous damper, preventing the +/- 400 flip.
+	var stiffness = 15.0
+	var applied_torque = clamp(delta_av * stiffness, -max_clutch_torque, max_clutch_torque)
+	
+	reaction_torques.x = applied_torque
+	reaction_torques.y = -applied_torque
+	#if av1 < av2:
+		#reaction_torques.x = -clutch_torque
+		#reaction_torques.y = clutch_torque
+	#else:
+		#reaction_torques.x = clutch_torque
+		#reaction_torques.y = -clutch_torque
 	return reaction_torques
 	

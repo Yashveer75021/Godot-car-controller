@@ -157,8 +157,20 @@ func apply_forces(opposite_comp, delta):
 		
 		rolling_resistance = rol_res_surface_mul * y_force
 		
+		# Get raw tire forces
 		force_vec = tire_model.update_tire_forces(slip_vec, y_force, surface_mu)
 		
+		##Viscous Deformation (Stops the backward-rolling physics singularity)
+		var slip_velocity_ms = z_vel - (spin * tire_radius)
+		var damping_coefficient = y_force * 0.15 
+		var viscous_force = slip_velocity_ms * damping_coefficient
+		
+		# Blend based on speed
+		var transition_speed = 1.5
+		var speed_blend = clamp(abs(z_vel) / transition_speed, 0.0, 1.0)
+		force_vec.y = lerp(viscous_force, force_vec.y, speed_blend)
+		
+		# Apply the safe, stabilized force to the car
 		var contact = get_collision_point() - car.global_transform.origin
 		var normal = get_collision_normal()
 		
@@ -172,57 +184,44 @@ func apply_forces(opposite_comp, delta):
 		return 0.0
 
 
-#func apply_torque(drive_torque, brake_torque, drive_inertia, delta):
-	#var prev_spin = spin
-	#var net_torque = force_vec.y * tire_radius
-	#net_torque += drive_torque
-	##this below function create a bug when we dont press the gas and brake the wheel jitter 
-#
-	#if abs(spin) < 5 and brake_torque > abs(net_torque):
-		#spin = 0
-	#else:
-		#net_torque -= (brake_torque + rolling_resistance) * sign(spin)
-		#spin += delta * net_torque / (wheel_inertia + drive_inertia)
-		#
-	#print(net_torque)
-	#if drive_torque * delta == 0:
-		#return 0.5
-	#else:
-		#return (spin - prev_spin) * (wheel_inertia + drive_inertia) / (drive_torque * delta)
-		##return spin * (wheel_inertia + drive_inertia) / (drive_torque * delta)
-
 func apply_torque(drive_torque, brake_torque, drive_inertia, delta):
 	var prev_spin = spin
 	var total_inertia = wheel_inertia + (drive_inertia * 0.5)
-	
-	#  Calculate road grip torque
-	var road_torque = force_vec.y * tire_radius
-	
-	# Prevent the tire grip from mathematically overshooting ground speed
-	var sync_spin = z_vel / tire_radius
-	var torque_to_sync = (sync_spin - spin) * total_inertia / delta
-	
-	if torque_to_sync > 0:
-		road_torque = clamp(road_torque, -99999.0, torque_to_sync)
-	else:
-		road_torque = clamp(road_torque, torque_to_sync, 99999.0)
-		
-	# Add engine power
-	var net_torque = road_torque + drive_torque 
+
+	# brush Friction (Accurate when the car is rolling)
+	var brush_torque = force_vec.y * tire_radius
+
+	# Viscous Deformation (Accurate at near-zero speeds)
+	# Simulate rubber damping. The heavier the car, the more the tire resists micro-slip.
+	# (0.15 is a standard physical constant for rubber hysteresis, tune as needed)
+	# Calculate actual slip speed in meters/second (No divide-by-zero math)
+	var slip_velocity_ms = z_vel - (spin * tire_radius)
+	var damping_coefficient = y_force * 0.15 
+	var viscous_torque = slip_velocity_ms * damping_coefficient * tire_radius
+	var transition_speed = 1.5
+	var speed_blend = clamp(abs(z_vel) / transition_speed, 0.0, 1.0)
+	var simulated_road_torque = lerp(viscous_torque, brush_torque, speed_blend)
+
+	#var road_torque = force_vec.y * tire_radius
+	var net_torque = simulated_road_torque + drive_torque
 	spin += delta * net_torque / total_inertia
-	
-	# Apply brakes and rolling resistance cleanly
-	var resistance_torque = (brake_torque + rolling_resistance) 
+
+	# 5. Discrete Coulomb Frictionaaaa
+	# move_toward is the mathematically correct discrete integration for dry friction
+	var dynamic_roll_res = rolling_resistance * clamp(abs(spin) / 2.0, 0.0, 1.0)
+	var resistance_torque = brake_torque + dynamic_roll_res
 	var speed_loss = delta * resistance_torque / total_inertia
-	spin = move_toward(spin, 0, speed_loss)
-	print(speed_loss)
+	spin = move_toward(spin, 0.0, speed_loss)
+	#print(spin)
 	if drive_torque * delta == 0:
 		return 0.5
 	else:
 		return (spin - prev_spin) * total_inertia / (drive_torque * delta)
 
+
 func set_spin(value):
 	spin = value 
+	
 
 
 func get_spin():
