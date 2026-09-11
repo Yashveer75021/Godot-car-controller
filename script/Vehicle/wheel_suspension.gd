@@ -164,7 +164,9 @@ func apply_forces(opposite_comp, delta):
 		var slip_velocity_ms = z_vel - (spin * tire_radius)
 		var damping_coefficient = y_force * 0.15 
 		var viscous_force = slip_velocity_ms * damping_coefficient
-		
+		var max_grip = (y_force * surface_mu) 
+		viscous_force = clamp(viscous_force, -max_grip, max_grip)
+		#print("vs:-",viscous_force)
 		# Blend based on speed
 		var transition_speed = 1.5
 		var speed_blend = clamp(abs(z_vel) / transition_speed, 0.0, 1.0)
@@ -188,31 +190,24 @@ func apply_torque(drive_torque, brake_torque, drive_inertia, delta):
 	var prev_spin = spin
 	var total_inertia = wheel_inertia + (drive_inertia * 0.5)
 
-	# brush Friction (Accurate when the car is rolling)
-	var brush_torque = force_vec.y * tire_radius
 
-	# Viscous Deformation (Accurate at near-zero speeds)
-	# Simulate rubber damping. The heavier the car, the more the tire resists micro-slip.
-	# (0.15 is a standard physical constant for rubber hysteresis, tune as needed)
-	# Calculate actual slip speed in meters/second (No divide-by-zero math)
+	var brush_torque = force_vec.y * tire_radius
 	var slip_velocity_ms = z_vel - (spin * tire_radius)
 	var damping_coefficient = y_force * 0.15 
 	var viscous_torque = slip_velocity_ms * damping_coefficient * tire_radius
-	var transition_speed = 1.5
+	var transition_speed = 0.25
 	var speed_blend = clamp(abs(z_vel) / transition_speed, 0.0, 1.0)
 	var simulated_road_torque = lerp(viscous_torque, brush_torque, speed_blend)
 
-	#var road_torque = force_vec.y * tire_radius
 	var net_torque = simulated_road_torque + drive_torque
 	spin += delta * net_torque / total_inertia
-
-	# 5. Discrete Coulomb Frictionaaaa
-	# move_toward is the mathematically correct discrete integration for dry friction
 	var dynamic_roll_res = rolling_resistance * clamp(abs(spin) / 2.0, 0.0, 1.0)
 	var resistance_torque = brake_torque + dynamic_roll_res
 	var speed_loss = delta * resistance_torque / total_inertia
 	spin = move_toward(spin, 0.0, speed_loss)
 	#print(spin)
+	
+	
 	if drive_torque * delta == 0:
 		return 0.5
 	else:

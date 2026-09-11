@@ -268,8 +268,12 @@ func engage(delta):
 	var clutch_slip_torque := 0.8 * clutch.friction
 	var reaction_torques : Vector2 = clutch.get_reaction_torques(engine_angular_vel, gearbox_shaft_speed, torque_out, react_torque, clutch_slip_torque, clutch_kick)
 
-	if clutch.locked:
-		reaction_torques.x = torque_out
+
+	if reaction_torques.y < -torque_out and torque_out > 0:
+			reaction_torques.y = -torque_out * 0.95
+			reaction_torques.x = torque_out * 0.95
+
+			
 	drive_reaction_torque = reaction_torques.x * (1 - clutch_input)
 	clutch_reaction_torque = reaction_torques.y * (1 - clutch_input)
 	

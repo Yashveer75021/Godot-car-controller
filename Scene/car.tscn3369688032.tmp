@@ -27,8 +27,8 @@ _data = [Vector2(0, 0), 0.0, 1.1110187, 0, 0, Vector2(1, 1), -0.2193245, 0.0, 0,
 point_count = 2
 
 [sub_resource type="Curve" id="Curve_mmd8j"]
-_data = [Vector2(0, 0.024647951), 0.0, 0.0, 0, 0, Vector2(0.04197901, 0.94014084), 0.0, 0.0, 0, 0, Vector2(0.25337332, 0.93309855), 0.0, 0.0, 0, 0, Vector2(0.494012, 0.9846153), 0.0, 0.0, 0, 0, Vector2(0.86806595, 0.92957747), 0.0, 0.0, 0, 0, Vector2(1, 0.35384613), 0.0, 0.0, 0, 0]
-point_count = 6
+_data = [Vector2(0, 0.4022346), 0.0, 0.0, 0, 0, Vector2(0.25149703, 0.91538453), 0.0, 0.0, 0, 0, Vector2(0.494012, 0.9846153), 0.0, 0.0, 0, 0, Vector2(0.745509, 0.67692304), 0.0, 0.0, 0, 0, Vector2(1, 0.35384613), 0.0, 0.0, 0, 0]
+point_count = 5
 
 [sub_resource type="Resource" id="Resource_bx7vq"]
 script = ExtResource("4_mmd8j")
@@ -77,16 +77,11 @@ metadata/_custom_type_script = "uid://dnr4dw6v7viol"
 [sub_resource type="Resource" id="Resource_uukhu"]
 script = ExtResource("2_uukhu")
 max_steer = 0.35
-max_brake_force = 35000.0
-max_torque = 800.0
+max_brake_force = 25000.0
 torque_curve = SubResource("Curve_mmd8j")
 throttle_model = SubResource("Curve_ynucw")
-engine_brake = 8000.0
-engine_moment = 0.45
-clutch_friction = 1500.0
+engine_brake = 20.0
 drivetrain_params = SubResource("Resource_hbetw")
-cd = 0.38
-frontal_area = 2.4
 wheel_params_fl = SubResource("Resource_kkigb")
 wheel_params_fr = SubResource("Resource_jlqtu")
 wheel_params_bl = SubResource("Resource_mmd8j")
@@ -107,7 +102,7 @@ height = 0.3
 [node name="car" type="Node3D" unique_id=2000124875]
 
 [node name="CarRigidBody" type="RigidBody3D" parent="." unique_id=1648240995]
-mass = 1900.0
+mass = 1000.0
 script = ExtResource("1_cd047")
 car_params = SubResource("Resource_uukhu")
 
