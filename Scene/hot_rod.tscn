@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://d334qry5yvrwc" path="res://script/Vehicle/base_Car.gd" id="1_d82so"]
 [ext_resource type="Script" uid="uid://cypblo36wnkun" path="res://script/Vehicle/diff_params.gd" id="2_r6w65"]
 [ext_resource type="Script" uid="uid://dusv21yvqp80g" path="res://script/Vehicle/drivetrain_params.gd" id="3_e6lfj"]
+[ext_resource type="AudioStream" path="res://Sound/tres/engine_sample.tres" id="4_1jfmg"]
 [ext_resource type="Script" uid="uid://bpncgmdpx7xq3" path="res://script/Vehicle/car_params.gd" id="4_amgmh"]
 [ext_resource type="Script" uid="uid://dnr4dw6v7viol" path="res://script/Vehicle/wheel_params.gd" id="5_1jfmg"]
 [ext_resource type="Script" uid="uid://787t50o6ky6u" path="res://script/Vehicle/TireModel/brush_tire_model.gd" id="6_d7tup"]
@@ -95,6 +96,7 @@ max_engine_rpm = 5500.0
 torque_curve = SubResource("Curve_mmd8j")
 throttle_model = SubResource("Curve_ynucw")
 engine_brake = 50.0
+engine_sound = ExtResource("4_1jfmg")
 drivetrain_params = SubResource("Resource_hbetw")
 wheel_params_fl = SubResource("Resource_kkigb")
 wheel_params_fr = SubResource("Resource_jlqtu")

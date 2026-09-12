@@ -25,6 +25,7 @@ window/stretch/aspect="expand"
 folder_colors={
 "res://Resources/": "green",
 "res://Scene/": "pink",
+"res://Sound/": "purple",
 "res://assets/": "orange",
 "res://assets/model/Hot_rod/": "red",
 "res://script/": "red",

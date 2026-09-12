@@ -9,6 +9,8 @@
 [ext_resource type="Script" uid="uid://787t50o6ky6u" path="res://script/Vehicle/TireModel/brush_tire_model.gd" id="4_mmd8j"]
 [ext_resource type="PackedScene" uid="uid://b8tj5b277nxm4" path="res://Scene/gui.tscn" id="8_jlqtu"]
 [ext_resource type="Material" uid="uid://bdcuuya7oexpb" path="res://Resources/material/hot_rod.tres" id="8_x3piv"]
+[ext_resource type="AudioStream" path="res://Sound/tres/engine_sample.tres" id="9_bx7vq"]
+[ext_resource type="Script" uid="uid://sd8vfycbsrna" path="res://script/camera/camera.gd" id="10_umec1"]
 
 [sub_resource type="Resource" id="Resource_2icf6"]
 script = ExtResource("2_ynucw")
@@ -27,8 +29,8 @@ _data = [Vector2(0, 0), 0.0, 1.1110187, 0, 0, Vector2(1, 1), -0.2193245, 0.0, 0,
 point_count = 2
 
 [sub_resource type="Curve" id="Curve_mmd8j"]
-_data = [Vector2(0, 0.024647951), 0.0, 0.0, 0, 0, Vector2(0.04197901, 0.94014084), 0.0, 0.0, 0, 0, Vector2(0.25337332, 0.93309855), 0.0, 0.0, 0, 0, Vector2(0.494012, 0.9846153), 0.0, 0.0, 0, 0, Vector2(0.86806595, 0.92957747), 0.0, 0.0, 0, 0, Vector2(1, 0.35384613), 0.0, 0.0, 0, 0]
-point_count = 6
+_data = [Vector2(0, 0.43203878), 0.0, 0.0, 0, 0, Vector2(0.29799998, 0.9466019), 0.49646944, 0.49646944, 0, 0, Vector2(0.494012, 0.9846153), 0.0, 0.0, 0, 0, Vector2(0.74999994, 0.6019417), 0.0, 0.0, 0, 0, Vector2(1, 0.35384613), 0.0, 0.0, 0, 0]
+point_count = 5
 
 [sub_resource type="Resource" id="Resource_bx7vq"]
 script = ExtResource("4_mmd8j")
@@ -77,13 +79,14 @@ metadata/_custom_type_script = "uid://dnr4dw6v7viol"
 [sub_resource type="Resource" id="Resource_uukhu"]
 script = ExtResource("2_uukhu")
 max_steer = 0.35
-max_brake_force = 35000.0
-max_torque = 800.0
+max_brake_force = 50000.0
+max_torque = 600.0
 torque_curve = SubResource("Curve_mmd8j")
 throttle_model = SubResource("Curve_ynucw")
 engine_brake = 8000.0
 engine_moment = 0.45
-clutch_friction = 1500.0
+engine_sound = ExtResource("9_bx7vq")
+clutch_friction = 1000.0
 drivetrain_params = SubResource("Resource_hbetw")
 cd = 0.38
 frontal_area = 2.4
@@ -162,8 +165,18 @@ transform = Transform3D(4.371139e-08, 1, -8.742278e-08, 1, -4.371139e-08, 0, -3.
 mesh = SubResource("CylinderMesh_d2r2c")
 surface_material_override/0 = ExtResource("8_x3piv")
 
-[node name="EngineSound" type="AudioStreamPlayer3D" parent="CarRigidBody" unique_id=913562855]
+[node name="EngineSound" type="AudioStreamPlayer" parent="CarRigidBody" unique_id=2052856912]
 
 [node name="gui" parent="CarRigidBody" unique_id=361202176 instance=ExtResource("8_jlqtu")]
 offset_left = 3.0
 offset_right = 3.0
+
+[node name="target" type="Marker3D" parent="CarRigidBody" unique_id=1099413204]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0019764, 0)
+
+[node name="Camera3D" type="Camera3D" parent="CarRigidBody" unique_id=14409958 node_paths=PackedStringArray("target_vehicle")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6914439, 3.7197278)
+script = ExtResource("10_umec1")
+target_vehicle = NodePath("../target")
+follow_distance = 10.0
+camera_height = 2.0

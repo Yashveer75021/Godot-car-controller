@@ -312,8 +312,6 @@ func shift_down():
 
 
 func play_engine_sound():
-	if car_params.engine_sound == null:
-		return
 	var pitch_scaler = rpm / 1000
 	if rpm >= car_params.rpm_idle and rpm < car_params.max_engine_rpm:
 		if audioplayer.stream != car_params.engine_sound:
